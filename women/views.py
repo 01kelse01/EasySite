@@ -6,5 +6,5 @@ def index(request):
     return HttpResponse("Сторінка програми women.")
 
 
-def categories(request):
-    return HttpResponse("<h1> Відображення категорій </h1>")
+def categories(request, catid):
+    return HttpResponse(f"<h1> Відображення категорій </h1><p>{catid}</p>")
