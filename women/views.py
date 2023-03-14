@@ -2,12 +2,22 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 
 
+menu = ['Про сайт', 'Додати публікацію', 'Зворотній зв`язок', 'Вхід']
+
+
 def index(request):
-    return render(request, 'women/index.html')
+    context = {
+        'menu': menu,
+        'title': 'Головна сторінка',
+    }
+    return render(request, 'women/index.html', context=context)
 
 
 def about(request):
-    return render(request, 'women/about.html')
+    context = {
+        'title': 'Про сайт',
+    }
+    return render(request, 'women/about.html', context=context)
 
 
 def categories(request, catid):
