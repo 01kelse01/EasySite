@@ -7,4 +7,10 @@ def index(request):
 
 
 def categories(request, catid):
+    if (request.GET):
+        print(request.GET)
     return HttpResponse(f"<h1> Відображення категорій </h1><p>{catid}</p>")
+
+
+def archive(request, year):
+    return HttpResponse(f"<h1> Відображення архіву по рокам </h1><p>{year}</p>")
