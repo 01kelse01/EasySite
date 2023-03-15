@@ -9,7 +9,7 @@
         {{p.content|linebreaks|truncatewords:50}}
         {% endautoescape %}
             <div class="clear"></div>
-            <p class="link-read-post"><a href="{% url 'post' p.pk %}">Читати публікацію</a></p>
+            <p class="link-read-post"><a href="{{ p.get_absolute_url }}">Читати публікацію</a></p>
         </li>
 	{% endfor %}
 </ul>
