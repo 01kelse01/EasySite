@@ -40,5 +40,9 @@ def login(request):
     return HttpResponse('Вхід')
 
 
+def show_post(request, post_id):
+    return HttpResponse(f'Відображення статті по id = {post_id}')
+
+
 def pageNotFound(request, exception):
     return HttpResponseNotFound("<h1>Сторінка не знайдена</h1>")
