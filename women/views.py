@@ -28,16 +28,16 @@ def about(request):
     return render(request, 'women/about.html', context=context)
 
 
-def categories(request, catid):
-    if (request.GET):
-        print(request.GET)
-    return HttpResponse(f"<h1> Відображення категорій </h1><p>{catid}</p>")
+def addpage(request):
+    return HttpResponse('Додати публікацію')
 
 
-def archive(request, year):
-    if int(year) > 2020:
-        return redirect('home', permanent=True)
-    return HttpResponse(f"<h1> Відображення архіву по рокам </h1><p>{year}</p>")
+def contact(request):
+    return HttpResponse('Зворотній зв`язок')
+
+
+def login(request):
+    return HttpResponse('Вхід')
 
 
 def pageNotFound(request, exception):
