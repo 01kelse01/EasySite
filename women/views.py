@@ -5,7 +5,7 @@ from .models import *
 
 menu = [
     {'title': 'Про сайт', 'url_name': 'about'},
-    {'title': 'Додати публікацію', 'url_name': 'add_page'},
+    {'title': 'Додати публікацію', 'url_name': 'addpage'},
     {'title': 'Зворотній зв`язок', 'url_name': 'contact'},
     {'title': 'Вхід', 'url_name': 'login'},
 ]
@@ -14,8 +14,8 @@ menu = [
 def index(request):
     posts = Women.objects.all()
     context = {
-        'menu': menu,
         'title': 'Головна сторінка',
+        'menu': menu,
         'posts': posts,
     }
     return render(request, 'women/index.html', context=context)
