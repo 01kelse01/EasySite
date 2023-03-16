@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load women_tags %}
 <html>
 <head>
 	<title>{{title}}</title>
@@ -32,6 +33,7 @@
 <tr>
 <!-- Sidebar -->
 	<td valign="top" class="left-chapters">
+		{% get_categories %}
 	<ul id="leftchapters">
 		{% if cat_selected == 0 %}
 			<li class="selected">Всі категорії</li>
