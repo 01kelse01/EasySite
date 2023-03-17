@@ -4,51 +4,17 @@
 <h1>{{ title }}</h1>
 <form action="{% url 'addpage' %}" method="post">
     {% csrf_token %}
-    <!--========================title================================-->
+    <!--========================for================================-->
+    {% for f in form %}
     <p>
-        <label class="form-label" for="{{ form.title.id_for_label }}">
-            {{ form.title.label }}:
+        <label class="form-label" for="{{ f.id_for_label }}">
+            {{ f.label }}:
         </label>
-        {{ form.title }}
+        {{ f }}
     </p>
-    <div class="form-error">{{ form.title.errors }}</div>
-    <!--========================title================================-->
-    <!--========================slug================================-->
-    <p>
-        <label class="form-label" for="{{ form.slug.id_for_label }}">
-            {{ form.slug.label }}:
-        </label>
-        {{ form.slug }}
-    </p>
-    <div class="form-error">{{ form.slug.errors }}</div>
-    <!--========================slug================================-->
-    <!--========================content================================-->
-    <p>
-        <label class="form-label" for="{{ form.content.id_for_label }}">
-            {{ form.content.label }}:
-        </label>
-        {{ form.content }}
-    </p>
-    <div class="form-error">{{ form.content.errors }}</div>
-    <!--========================content================================-->
-    <!--========================is_published================================-->
-    <p>
-        <label class="form-label" for="{{ form.is_published.id_for_label }}">
-            {{ form.is_published.label }}:
-        </label>
-        {{ form.is_published }}
-    </p>
-    <div class="form-error">{{ form.is_published.errors }}</div>
-    <!--========================is_published================================-->
-    <!--========================cat================================-->
-    <p>
-        <label class="form-label" for="{{ form.cat.id_for_label }}">
-            {{ form.cat.label }}:
-        </label>
-        {{ form.cat }}
-    </p>
-    <div class="form-error">{{ form.cat.errors }}</div>
-    <!--========================cat===============================-->
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <!--========================endfor================================-->
 
     <button type="submit">Додати</button>
 </form>
