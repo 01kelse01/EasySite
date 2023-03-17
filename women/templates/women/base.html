@@ -36,6 +36,9 @@
 		<!-- тег -->
 	<!-- {% getcats as categories %}-->
 		<!-- тег -->
+		<!-- тег -->
+<!--		{% getcats filter=1 %}-->
+		<!-- тег -->
 	<ul id="leftchapters">
 		{% if cat_selected == 0 %}
 			<li class="selected">Всі категорії</li>
@@ -43,7 +46,8 @@
 			<li><a href="{% url 'home' %}">Всі категорії</a></li>
 		{% endif %}
 		<!-- Включающий тег -->
-		{% show_categories %}
+<!--		{% show_categories %}-->
+		{% show_categories 'name' cat_selected %}
 		<!-- Включающий тег -->
 		<li class="share">
 		<p>Наш канал</p>
