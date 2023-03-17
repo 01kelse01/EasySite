@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 
 from .forms import *
 from .models import *
@@ -12,15 +13,29 @@ menu = [
 ]
 
 
-def index(request):
-    posts = Women.objects.all()
-    context = {
-        'title': 'Головна сторінка',
-        'menu': menu,
-        'posts': posts,
-        'cat_selected': 0,
-    }
-    return render(request, 'women/index.html', context=context)
+class WomenHome(ListView):
+    model = Women
+    template_name = 'women/index.html'
+    context_object_name = 'posts'
+    extra_context = {'title': 'Головна сторінка'}
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Головна сторінка'
+        context['cat_selected'] = 0
+        return context
+
+
+# def index(request):
+#     posts = Women.objects.all()
+#     context = {
+#         'title': 'Головна сторінка',
+#         'menu': menu,
+#         'posts': posts,
+#         'cat_selected': 0,
+#     }
+#     return render(request, 'women/index.html', context=context)
 
 
 def about(request):
