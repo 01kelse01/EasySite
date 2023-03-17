@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
+from .forms import *
 from .models import *
 
 menu = [
@@ -30,7 +31,13 @@ def about(request):
 
 
 def addpage(request):
-    return HttpResponse('Додати публікацію')
+    form = AddPostForm()
+    context = {
+        'title': 'Додавання публікації',
+        'menu': menu,
+        'form': form,
+    }
+    return render(request, 'women/addpage.html', context=context)
 
 
 def contact(request):
