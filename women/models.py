@@ -37,4 +37,4 @@ class Women(models.Model):
     class Meta:
         verbose_name = 'Відомі жінки'
         verbose_name_plural = 'Відомі жінки'
-        ordering = ['time_create', 'title']
+        ordering = ['-time_create', 'title']
