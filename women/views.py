@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, CreateView
 
 from .forms import *
 from .models import *
+from .utils import *
 
 menu = [
     {'title': 'Про сайт', 'url_name': 'about'},
@@ -13,7 +14,7 @@ menu = [
 ]
 
 
-class WomenHome(ListView):
+class WomenHome(DataMixin, ListView):
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
@@ -21,10 +22,8 @@ class WomenHome(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Головна сторінка'
-        context['cat_selected'] = 0
-        return context
+        c_def = self.get_user_context(title='Головна сторінка')
+        return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
         return Women.objects.filter(is_published=True)
