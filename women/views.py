@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 
 from .forms import *
 from .models import *
@@ -48,23 +48,33 @@ def about(request):
     return render(request, 'women/about.html', context=context)
 
 
-def addpage(request):
-    if request.method == 'POST':
-        form = AddPostForm(request.POST, request.FILES)
-        if form.is_valid():
-            # print(form.cleaned_data)
-            form.save()
-            return redirect('home')
+class AddPage(CreateView):
+    form_class = AddPostForm
+    template_name = 'women/addpage.html'
 
-    else:
-        form = AddPostForm()
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['menu'] = menu
+        context['title'] = 'Додавання публікації'
+        return context
 
-    context = {
-        'title': 'Додавання публікації',
-        'menu': menu,
-        'form': form,
-    }
-    return render(request, 'women/addpage.html', context=context)
+
+# def addpage(request):
+#     if request.method == 'POST':
+#         form = AddPostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # print(form.cleaned_data)
+#             form.save()
+#             return redirect('home')
+#     else:
+#         form = AddPostForm()
+#
+#     context = {
+#         'title': 'Додавання публікації',
+#         'menu': menu,
+#         'form': form,
+#     }
+#     return render(request, 'women/addpage.html', context=context)
 
 
 def contact(request):
