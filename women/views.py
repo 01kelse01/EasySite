@@ -1,17 +1,12 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
 from .models import *
 from .utils import *
-
-menu = [
-    {'title': 'Про сайт', 'url_name': 'about'},
-    {'title': 'Додати публікацію', 'url_name': 'addpage'},
-    {'title': 'Зворотній зв`язок', 'url_name': 'contact'},
-    {'title': 'Вхід', 'url_name': 'login'},
-]
 
 
 class WomenHome(DataMixin, ListView):
@@ -47,15 +42,16 @@ def about(request):
     return render(request, 'women/about.html', context=context)
 
 
-class AddPage(CreateView):
+class AddPage(LoginRequiredMixin, DataMixin, CreateView):
     form_class = AddPostForm
     template_name = 'women/addpage.html'
+    login_url = reverse_lazy('home')
+    raise_exception = True
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Додавання публікації'
-        return context
+        c_def = self.get_user_context(title='Додавання публікації')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 # def addpage(request):
@@ -84,7 +80,7 @@ def login(request):
     return HttpResponse('Вхід')
 
 
-class ShowPost(DetailView):
+class ShowPost(DataMixin, DetailView):
     model = Women
     template_name = 'women/post.html'
     slug_url_kwarg = 'post_slug'
@@ -92,9 +88,8 @@ class ShowPost(DetailView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = context['post']
-        return context
+        c_def = self.get_user_context(title='post')
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 # def show_post(request, post_slug):
@@ -108,7 +103,7 @@ class ShowPost(DetailView):
 #     return render(request, 'women/post.html', context=context)
 
 
-class WomenCategory(ListView):
+class WomenCategory(DataMixin, ListView):
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
@@ -119,10 +114,9 @@ class WomenCategory(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['menu'] = menu
-        context['title'] = 'Категорія - ' + str(context['posts'][0].cat)
-        context['cat_selected'] = context['posts'][0].cat_id
-        return context
+        c_def = self.get_user_context(title='Категорія - ' + str(context['posts'][0].cat),
+                                      cat_selected=context['posts'][0].cat_id)
+        return dict(list(context.items()) + list(c_def.items()))
 
 
 # def show_category(request, cat_id):
