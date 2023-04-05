@@ -6,7 +6,6 @@ menu = [
     {'title': 'Про сайт', 'url_name': 'about'},
     {'title': 'Додати публікацію', 'url_name': 'addpage'},
     {'title': 'Зворотній зв`язок', 'url_name': 'contact'},
-    {'title': 'Вхід', 'url_name': 'login'},
 ]
 
 
